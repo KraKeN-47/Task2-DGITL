@@ -28,7 +28,7 @@ app.get("/getCarPlate", async (req, resp) => {
 app.get("/getCarPlates", async (req, resp) => {
   await db
     .collection("Car-Plates")
-    .orderBy("Name", "desc")
+    .orderBy("Name", "asc")
     .get()
     .then((data) => {
       let plates = [];
