@@ -6,6 +6,9 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import DoneOutlineSharpIcon from "@material-ui/icons/DoneOutlineSharp";
+import { motion } from "framer-motion";
+import SnackBar from "@material-ui/core/Snackbar";
+import SelectInput from "@material-ui/core/Select/SelectInput";
 
 const api = axios.create(
   "https://europe-west1-car-plate-numbers.cloudfunctions.net/api"
@@ -20,6 +23,8 @@ export class editPlate extends Component {
     DefName: this.props.location.state.carPlate.Name,
     DefSurname: this.props.location.state.carPlate.Surname,
     DefPlateNr: this.props.location.state.carPlate.PlateNr,
+    snackBarErr: false,
+    snackBarMsg: "",
   };
   handleSurnameOnChange = async (event) => {
     await this.setState({ surname: event.target.value });
@@ -55,13 +60,20 @@ export class editPlate extends Component {
       .then((resp) => console.log(resp))
       .catch((err) => {
         console.log(err);
-        alert(err);
+        this.setState({ snackBarMsg: JSON.stringify(err.message) });
+        this.setState({ snackBarErr: true });
       });
-    window.location.href = "/";
   };
   render() {
     return (
-      <div>
+      <motion.div animate={{ opacity: [0, 1] }}>
+        <SnackBar
+          onClose={() => this.setState({ snackBarErr: false })}
+          autoHideDuration={5000}
+          open={this.state.snackBarErr}
+          message={this.state.snackBarMsg}
+        />
+
         <div className="container">
           <TextField
             className="textfield"
@@ -106,7 +118,7 @@ export class editPlate extends Component {
             </Button>
           </NavLink>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

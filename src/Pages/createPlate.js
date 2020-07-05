@@ -3,6 +3,7 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import DoneOutlineSharpIcon from "@material-ui/icons/DoneOutlineSharp";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
+import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import "./createPlate.css";
@@ -46,7 +47,7 @@ export class createPlate extends Component {
   }
   render() {
     return (
-      <div className="container">
+      <motion.div animate={{ opacity: [0, 1] }} className="container">
         <div>
           <TextField
             className="textfield"
@@ -88,7 +89,7 @@ export class createPlate extends Component {
             </Button>
           </NavLink>
         </div>
-      </div>
+      </motion.div>
     );
   }
 }

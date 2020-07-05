@@ -97,12 +97,14 @@ export class PlateTable extends Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Confirmation
-          confirmDel={this.state.confirmDel}
-          delPlateId={this.state.delPlateId}
-          updateConfirm={this.handleConfirmUpdate.bind(this)}
-          carPlates={this.props.carPlates}
-        />
+        <div>
+          <Confirmation
+            confirmDel={this.state.confirmDel}
+            delPlateId={this.state.delPlateId}
+            updateConfirm={this.handleConfirmUpdate.bind(this)}
+            carPlates={this.props.carPlates}
+          />
+        </div>
       </div>
     );
   }

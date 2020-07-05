@@ -26,7 +26,7 @@ export class Confirmation extends Component {
         const index = this.props.carPlates.findIndex((x) => x.Id === toDelete);
         this.props.carPlates.splice(index, 1);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(JSON.stringify(err.message)));
   }
   render() {
     return (
@@ -36,11 +36,13 @@ export class Confirmation extends Component {
           className="confirmation"
           isOpen={this.props.confirmDel}
           ariaHideApp={false}
-          shouldCloseOnOverlayClick={true}
-          shouldCloseOnEsc={true}
-          style={{ overlay: { background: "rgba(36, 123, 160, 0.7)" } }}
+          style={{
+            overlay: { background: "rgba(0,0,0, 0.7)" },
+          }}
         >
-          <div>Are you sure you want to delete this record?</div>
+          <div>
+            <h3>Are you sure you want to delete this record?</h3>
+          </div>
           <br></br>
           <Button
             className="plate-right"

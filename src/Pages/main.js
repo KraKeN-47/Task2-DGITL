@@ -3,6 +3,7 @@ import axios from "axios";
 import "./main.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Backdrop from "@material-ui/core/Backdrop";
+import { motion } from "framer-motion";
 //components
 import PlateTable from "../Components/PlateTable";
 import Create from "../Components/Create";
@@ -26,7 +27,10 @@ export class main extends Component {
         this.setState({ loadingScreen: false });
         console.log(this.state.carPlates);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        alert("Blocked by CORS");
+        console.log(err);
+      });
   }
   render() {
     return (
@@ -38,12 +42,12 @@ export class main extends Component {
             </Backdrop>
           </div>
         ) : (
-          <div>
+          <motion.div animate={{ opacity: [0, 1] }}>
             <PlateTable carPlates={this.state.carPlates} />
             <div className="createBTN">
               <Create />
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
     );

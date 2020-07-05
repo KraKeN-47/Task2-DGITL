@@ -65,13 +65,15 @@ app.post("/createCarPlate", async (req, resp) => {
   }
   const platenr = req.body.platenr;
   if (
-    PlateLetterValidation(platenr) === false &&
+    platenr.length < 6 ||
+    platenr.length > 6 ||
+    PlateLetterValidation(platenr) === false ||
     PlateNumberValidation(platenr) === false
   ) {
     return resp
       .status(400)
       .json(
-        "Wrong plate number format. Must be 3 UPPERCASE letters and 3 numbers 0-9"
+        "Wrong plate number format. Must be 3 UPPERCASE letters and 3 numbers 0-9. For ex.: ASD123"
       );
   }
 
@@ -123,6 +125,20 @@ app.delete("/deleteCarPlate", async (req, resp) => {
 
 // POST method to UPDATE desired Car Plate's information by ID
 app.post("/setCarPlate", async (req, resp) => {
+  const plate = req.body.platenr;
+  if (
+    plate.length < 6 ||
+    plate.length > 6 ||
+    PlateLetterValidation(plate) === false ||
+    PlateNumberValidation(plate) === false
+  ) {
+    return resp
+      .status(400)
+      .json(
+        "Wrong plate number format. Must be 3 UPPERCASE letters and 3 numbers 0-9. For ex.: ASD123"
+      );
+  }
+
   await db
     .collection("Car-Plates")
     .doc(req.body.id)
@@ -133,7 +149,7 @@ app.post("/setCarPlate", async (req, resp) => {
     })
     .then((success) =>
       resp.json({
-        message: `Plate ${success.id} has been modified successfully`,
+        message: `Plate ${req.body.id} has been modified successfully`,
       })
     )
     .catch((err) => {
