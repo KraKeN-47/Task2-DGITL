@@ -1,0 +1,25 @@
+.createPlate {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.textfield {
+  background-color: rgb(201, 190, 170);
+  color: black;
+  padding: 10px;
+}
+
+.create-confirm {
+  left: 40%;
+  top: 1vh;
+  width: 12vh;
+  height: 4vh;
+}
+.create-back {
+  left: 23.5%;
+  top: -11vh;
+  width: 10vh;
+  height: 4vh;
+}

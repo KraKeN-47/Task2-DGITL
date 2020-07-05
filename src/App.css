@@ -1,0 +1,11 @@
+.App {
+  background-image: url("https://i.pinimg.com/originals/35/42/c9/3542c9d2ebd9749a11d35601f632e33b.jpg");
+  position: sticky;
+  min-height: 100%;
+  min-width: 100%;
+  background-attachment: fixed;
+  background-size: cover;
+}
+#root {
+  height: 100vh;
+}
