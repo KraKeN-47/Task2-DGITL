@@ -2,6 +2,7 @@
 
 
 ## Warning: There's an unresolved CORS policy block issue. So, only those request methods that don't require CORS are accessable.
+## Resolved CORS issue 2020/07/11
 ##### No need to run a server. All server-side functions code is in the firebase's cloud.
 ##### If you wish to view the source code of the server you can simply click here:
 * https://github.com/KraKeN-47/Task2-DGITL/tree/master/server/functions
