@@ -10,21 +10,23 @@ const api = axios.create({
 export class Confirmation extends Component {
   delete(toDelete) {
     console.log(toDelete);
-    // this should go inside the axios call
-    const index = this.props.carPlates.findIndex((x) => x.Id === toDelete);
-    this.props.carPlates.splice(index, 1);
-    this.props.updateConfirm();
-    // ------------------------------------
+
     api
       .delete("/deleteCarPlate", {
-        id: toDelete,
+        data: {
+          id: toDelete,
+        },
       })
       .then((resp) => {
         if (resp.status !== 500) {
           this.setState({ confirmDel: false });
         }
+        // this should go inside the axios call
         const index = this.props.carPlates.findIndex((x) => x.Id === toDelete);
         this.props.carPlates.splice(index, 1);
+        this.props.updateConfirm();
+        // ------------------------------------
+        alert("Item removed successfully");
       })
       .catch((err) => alert(JSON.stringify(err.message)));
   }

@@ -5,8 +5,13 @@ const cors = require("cors");
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore(); // database
 const app = express();
+const bodyParser = require("body-parser");
 
 app.use(cors({ origin: true }));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
+app.use(bodyParser.text());
 
 // GET method to retrieve a CarPlate by ID
 app.get("/getCarPlate", async (req, resp) => {
@@ -108,9 +113,12 @@ app.post("/createCarPlate", async (req, resp) => {
 
 // DELETE method to DELETE desired Car Plate by ID
 app.delete("/deleteCarPlate", async (req, resp) => {
+  //console.log()
+  var id = req.body.id;
+  console.log("deleteCarPlate started");
   await db
     .collection("Car-Plates")
-    .doc(req.body.id)
+    .doc(id)
     .delete()
     .then(() => {
       return resp.json({
@@ -125,7 +133,12 @@ app.delete("/deleteCarPlate", async (req, resp) => {
 
 // POST method to UPDATE desired Car Plate's information by ID
 app.post("/setCarPlate", async (req, resp) => {
-  const plate = req.body.platenr;
+  console.log("req: ", req);
+  console.log("req.data: ", req.data);
+  console.log("req.body: ", req.body);
+  console.log("req.body.data: ", req.body.data);
+  console.log("req.body.platenr: ", req.body.platenr);
+  const plate = req.body.data.platenr;
   if (
     plate.length < 6 ||
     plate.length > 6 ||
@@ -141,15 +154,15 @@ app.post("/setCarPlate", async (req, resp) => {
 
   await db
     .collection("Car-Plates")
-    .doc(req.body.id)
+    .doc(req.body.data.id)
     .set({
-      Name: req.body.name,
-      Surname: req.body.surname,
-      PlateNr: req.body.platenr,
+      Name: req.body.data.name,
+      Surname: req.body.data.surname,
+      PlateNr: req.body.data.platenr,
     })
     .then((success) =>
       resp.json({
-        message: `Plate ${req.body.id} has been modified successfully`,
+        message: `Plate ${req.body.data.id} has been modified successfully`,
       })
     )
     .catch((err) => {

@@ -8,15 +8,18 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import DoneOutlineSharpIcon from "@material-ui/icons/DoneOutlineSharp";
 import { motion } from "framer-motion";
 import SnackBar from "@material-ui/core/Snackbar";
-import SelectInput from "@material-ui/core/Select/SelectInput";
 
 const api = axios.create(
   "https://europe-west1-car-plate-numbers.cloudfunctions.net/api"
 );
 
 export class editPlate extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({ id: this.props.location.state.carPlate.Id });
+    console.log(this.state.id);
+  }
   state = {
+    id: "",
     name: "",
     surname: "",
     platenr: "",
@@ -45,22 +48,31 @@ export class editPlate extends Component {
     if (this.state.surname === "") {
       await this.setState({ surname: this.state.DefSurname });
     }
-    console.log("Name: ", this.state.name);
-    console.log("Surname: ", this.state.surname);
-    console.log("PlateNr: ", this.state.platenr);
+    await this.setState({ id: this.props.location.state.carPlate.Id });
+    // console.log("Name: ", this.state.name);
+    // console.log("Surname: ", this.state.surname);
+    // console.log("PlateNr: ", this.state.platenr);
+    // console.log("Id: ", this.state.id);
     await api
       .post(
         "https://europe-west1-car-plate-numbers.cloudfunctions.net/api/setCarPlate",
         {
-          name: this.state.name,
-          surname: this.state.surname,
-          platenr: this.state.platenr,
+          data: {
+            id: this.state.id,
+            name: this.state.name,
+            surname: this.state.surname,
+            platenr: this.state.platenr,
+          },
         }
       )
-      .then((resp) => console.log(resp))
+      .then((resp) => {
+        console.log(resp);
+        alert(resp.data.message);
+        window.location.href = "/";
+      })
       .catch((err) => {
-        console.log(err);
-        this.setState({ snackBarMsg: JSON.stringify(err.message) });
+        //console.log(err.response.data);
+        this.setState({ snackBarMsg: err.response.data });
         this.setState({ snackBarErr: true });
       });
   };
